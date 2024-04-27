@@ -1,12 +1,11 @@
 import Stack from '@mui/material/Stack';
-import { Alert, Box, Button, Snackbar, Typography, useTheme } from '@mui/material';
+import { Alert, Box, Button, Snackbar, Typography } from '@mui/material';
 import { useAuthentication } from '../Auth';
 import { useState } from 'react';
 import Card from '../Card';
 
 
 function LogoutSnackBar({state, setState}) {
-  
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {return;}
     setState({...state, open: false});
@@ -20,18 +19,18 @@ function LogoutSnackBar({state, setState}) {
 }
 
 function Landing() {
+  /** TODO: Add an welcome statement if is logged in */
   const user = useAuthentication({onFail: () => {}});
   const [openSnack, setOpenSnack] = useState({open: false, message: "", isSuccess: false});
 
   /** Opens snackbar accordingly to the response */
   function logout(e) {
     e.preventDefault();
-    fetch("http://localhost:3000/logout", {credentials: "include"})
+    fetch(process.env.REACT_APP_API_LOGOUT, {credentials: "include"})
       .then(res => res.json()
         .then(data => setOpenSnack({open: true, message: data.message, isSuccess: res.ok}))
       );
   }
-  
 
   return (
     <>
@@ -46,13 +45,13 @@ function Landing() {
                   <Typography fontSize="1vw">We can choose for you!</Typography>
                 </Box>
                 <Button  sx={{backgroundImage: "url(steambutton.png)", backgroundPosition: "center", backgroundSize: "contain", backgroundRepeat: "no-repeat", minWidth: "25vw"}} 
-                href='http://localhost:3000/auth/steam'/>
+                href={process.env.REACT_APP_API_STEAM_AUTH}/>
               </Stack>
             </Stack>
         </Card>
-        <Button href="http://localhost:3000/user" >user button</Button>
-        <Button href="http://localhost:3000/random">Game button</Button>
-        <Button href="http://localhost:3000/logout" onClick={logout}>logout button</Button>
+        <Button href={process.env.REACT_APP_API_USER} >user button</Button>
+        <Button href={process.env.REACT_APP_API_RANDOM}>Game button</Button>
+        <Button href={process.env.REACT_APP_API_LOGOUT} onClick={logout}>logout button</Button>
       </Box>
     </>
   );

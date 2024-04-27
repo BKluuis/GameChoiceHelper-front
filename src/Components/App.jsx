@@ -8,7 +8,7 @@ import theme from './Theme';
 
 function App() {
   const [user, setUser] = useState();
-    const userValue = {user, setUser};
+  const userValue = {user, setUser};
 
   return (
     <ThemeProvider theme={theme}>

@@ -39,6 +39,8 @@ export function useAuthentication(callbacks = {onFail: () => {window.location.re
 
         if(!user){
            getUser()
+        } else if(callbacks.onSuccess){
+            callbacks.onSuccess();
         }
     }, []);
 

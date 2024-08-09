@@ -1,4 +1,4 @@
-import { Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import Card from "./Card";
 import Loading from "./Views/Loading";
 import { useAuthentication } from "./Auth";
@@ -11,6 +11,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 import SportsEsportsOutlinedIcon from '@mui/icons-material/SportsEsportsOutlined';
 import SwapVerticalCircleIcon from '@mui/icons-material/SwapVerticalCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { orange } from "@mui/material/colors";
 
 const userStatus = [
@@ -45,27 +46,32 @@ const userStatus = [
 ];
 
 /** TODO: user visibility state may be 1 aka private */
-function UserCard({sx}){
+/** TODO: Add logout button to the right of the name */
+function UserCard({sx, onLogout}){
     const [userStats, setUserStats] = useState({game: "", status: userStatus[0]})
     const user = useAuthentication({
         onSuccess: () => {
             fetch(process.env.REACT_APP_API_USER_DETAILS, {credentials: "include"})
             .then(response => response.json())
-                .then(data => setUserStats({game: data.gameextrainfo ?? null, status: userStatus[data.personastate]}))
+            .then(data => setUserStats({game: data.gameextrainfo ?? null, status: userStatus[data.personastate]}))
         }, 
-    });
-    
+    });    
     
     if(!user){
         return <Loading message="Checking your credentials"/>
     }
 
     return (
-        <Card sx={{"height": "25vh", "width": "30vw", "minHeight": "150px", "minWidth": "400px", display: "inline-block", p: "20px", ...(sx)}} shadowPad={20}>
+        <Card height="25vh" width="30vw" minHeight="150px" minWidth="400px" display="inline-block" p="20px" shadowPad={20} shadowColor="black" sx={sx}>
             <Stack flexDirection="row" height="100%" justifyContent="space-between">
                 <img src={user._json.avatarfull} alt="User avatar" height="100%" style={{maxWidth: "100%", borderRadius: 15, marginRight: "5%"}}/>
                 <Stack flexGrow={1} overflow="hidden"> 
-                    <Typography variant="h6" sx={{overflow: "hidden", textOverflow: "ellipsis", pb:"5%"}}>{user._json.personaname}</Typography>
+                    <Stack direction="row" alignItems="center" justifyContent="space-between" pb="5%">
+                        <Typography variant="h6" sx={{overflow: "hidden", textOverflow: "ellipsis", }}>{user._json.personaname}</Typography>
+                        <Button href={process.env.REACT_APP_API_LOGOUT} onClick={onLogout} sx={{color: "text.primary"}} >
+                            <LogoutIcon />
+                        </Button>
+                    </Stack>
                     <Stack bgcolor="primary.light" flexGrow={1} borderRadius="15px" p="5%" justifyContent="space-evenly">
                             <Link textAlign="center" underline="hover" display="flex" alignItems="center" gap={1} color="text.primary" href={user._json.profileurl}>
                                 Profile link

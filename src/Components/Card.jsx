@@ -3,7 +3,6 @@
  */
 
 import { Box } from "@mui/material";
-import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 
 const Card = styled(Box, {shouldForwardProp: (prop) => prop !== 'shadowPad' && prop !== 'shadowColor'})(

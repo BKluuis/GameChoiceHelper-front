@@ -1,4 +1,4 @@
-import { Route, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import { Route, createBrowserRouter, createRoutesFromElements, useLocation } from "react-router-dom";
 import Header from "../Components/Views/Header";
 import LandingPage from "../Components/Views/Landing";
 import GameDisplay, { GameDisplaySkeleton } from "../Components/GameDisplay";
@@ -9,6 +9,7 @@ import { Box } from "@mui/material";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import UserCard from "../Components/UserCard";
 
+//TODO: move loader to gamedetails file
 const router = createBrowserRouter(
     createRoutesFromElements(
         [
@@ -16,8 +17,12 @@ const router = createBrowserRouter(
             <Route element={<Header/>} children={
             [
                 <Route key={1} index path="games" element={<GameList/>}/>,
-                <Route key={2} path="random/:appid?" element={<GameDetails/>} loader={ async ({params}) => {
+                <Route key={2} path="random/:appid?" element={<GameDetails/>} loader={ async ({params, request}) => {
                     var gameinfo = false;
+
+                    // const url = new URL(request.url);
+                    // const searchTerm = url.searchParams.get("filter");
+                    // console.log(searchTerm);
 
                     /** Visualize details of a chosen game */
                     if(params.appid){
@@ -41,16 +46,16 @@ const router = createBrowserRouter(
                 }}/>
             ]}
             />,
-            <Route path="test" element={
-                <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-                    <UserCard/>
-            {/* //         <GameDisplay 
-            //         key={1} 
-            //         name={"Kerbal Space Program"} 
-            //         imgSrc={`https://cdn.cloudflare.steamstatic.com/steam/apps/220200/capsule_231x87.jpg`} 
-            //         onClick={() => {}}/>                 */}
-            </Box>
-            } />
+            // <Route path="test" element={
+            //     <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+            //         <UserCard/>
+            //          <GameDisplay 
+            //          key={1} 
+            //          name={"Kerbal Space Program"} 
+            //          imgSrc={`https://cdn.cloudflare.steamstatic.com/steam/apps/220200/capsule_231x87.jpg`} 
+            //          onClick={() => {}}/>                
+            //     </Box>} 
+            // />
         ]
     )
 );

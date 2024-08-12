@@ -20,7 +20,7 @@ function Landing() {
                   <Typography fontSize="1vw">We can choose for you!</Typography>
                 </Box>
                 <Button  sx={{backgroundImage: "url(steambutton.png)", backgroundPosition: "center", backgroundSize: "contain", backgroundRepeat: "no-repeat", minWidth: "25vw"}} 
-                href={process.env.REACT_APP_API_STEAM_AUTH}/>
+                href={process.env.REACT_APP_API + process.env.REACT_APP_STEAM_AUTH}/>
               </Stack>
             </Stack>
         </Card>

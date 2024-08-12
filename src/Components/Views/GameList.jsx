@@ -24,7 +24,7 @@ export default function GameList() {
      */
     useEffect(() => {
         /** Does this triggers an re-render that triggers itself? */
-        fetch(process.env.REACT_APP_API_USER_LIBRARY, {credentials: "include"})
+        fetch(process.env.REACT_APP_API + process.env.REACT_APP_USER_LIBRARY, {credentials: "include"})
         .then(res => res.json())
         .then(data => {
             const mappedGames = data.map((game, i) => 

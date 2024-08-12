@@ -12,11 +12,11 @@ const AuthContext = createContext({
  * If onFail is not provided, redirects to landing page.
  * If the api is processing the request, the user will be null.
  */
-export function useAuthentication(callbacks = {onFail: () => {window.location.replace(process.env.REACT_APP_API_STEAM_AUTH)}, onSuccess: null}){
+export function useAuthentication(callbacks = {onFail: () => {window.location.replace(process.env.REACT_APP_API + process.env.REACT_APP_STEAM_AUTH)}, onSuccess: null}){
     const {user, setUser} = useContext(AuthContext);
     
     /** This is really clunky and i don't like it, but i don't know any other way of allowing object destructuring with optional parameters and default values */
-    callbacks.onFail = callbacks.onFail || function() {window.location.replace(process.env.REACT_APP_API_STEAM_AUTH)};
+    callbacks.onFail = callbacks.onFail || function() {window.location.replace(process.env.REACT_APP_API + process.env.REACT_APP_STEAM_AUTH)};
     callbacks.onSuccess = callbacks.onSuccess || function() {};   
 
 
@@ -24,7 +24,7 @@ export function useAuthentication(callbacks = {onFail: () => {window.location.re
         async function getUser(){
 
             /** Extremely necessary that credentials = include, this way cookies can be sent to backend */
-            const response = await fetch(process.env.REACT_APP_API_USER, {credentials: "include"});
+            const response = await fetch(process.env.REACT_APP_API + process.env.REACT_APP_USER, {credentials: "include"});
             if(response.ok){
                 const data = await response.json();
                 setUser(data);

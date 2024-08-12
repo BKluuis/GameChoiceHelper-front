@@ -51,7 +51,7 @@ function UserCard({sx, onLogout}){
     const [userStats, setUserStats] = useState({game: "", status: userStatus[0]})
     const user = useAuthentication({
         onSuccess: () => {
-            fetch(process.env.REACT_APP_API_USER_DETAILS, {credentials: "include"})
+            fetch(process.env.REACT_APP_API + process.env.REACT_APP_USER_DETAILS, {credentials: "include"})
             .then(response => response.json())
             .then(data => setUserStats({game: data.gameextrainfo ?? null, status: userStatus[data.personastate]}))
         }, 
@@ -68,7 +68,7 @@ function UserCard({sx, onLogout}){
                 <Stack flexGrow={1} overflow="hidden"> 
                     <Stack direction="row" alignItems="center" justifyContent="space-between" pb="5%">
                         <Typography variant="h6" sx={{overflow: "hidden", textOverflow: "ellipsis", }}>{user._json.personaname}</Typography>
-                        <Button href={process.env.REACT_APP_API_LOGOUT} onClick={onLogout} sx={{color: "text.primary"}} >
+                        <Button href={process.env.REACT_APP_API + process.env.REACT_APP_LOGOUT} onClick={onLogout} sx={{color: "text.primary"}} >
                             <LogoutIcon />
                         </Button>
                     </Stack>

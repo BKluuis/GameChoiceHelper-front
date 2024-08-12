@@ -38,7 +38,7 @@ function Header() {
 
     function handleLogout(e) {
         e.preventDefault();
-        fetch(process.env.REACT_APP_API_LOGOUT, {credentials: "include"})
+        fetch(process.env.REACT_APP_API + process.env.REACT_APP_LOGOUT, {credentials: "include"})
         .then(res => res.json()
             .then(data => setOpenSnack({open: true, message: data.message, isSuccess: res.ok}))
         );
